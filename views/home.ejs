@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/output.css" />
+    <link rel="icon" type="image/png" href="/title.png" />
+    <title>Trang chủ</title>
+  </head>
+  <body>
+    <body>
+      <div class="flex bg-[url('/home.png')] bg-cover h-screen justify-center items-center">
+        <div class="border bg-white/5 w-3/4 h-[80%] rounded-4xl">
+          <form action="" class="bg-blue-300/70 text-black mt-7 flex items-center gap-2 m-auto h-[7%] w-1/2 ps-5 rounded-3xl">
+            <input type="text" placeholder="Tìm kiếm một thành phố..." class="h-full focus:outline-none w-[90%]" />
+            <button type="submit" class="bg-blue-300 h-[90%] w-[7%] flex justify-center items-center rounded-full">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            </button>
+          </form>
+          <p class="text-4xl font-bold text-white text-center mt-7 mb-5"><%= data.name %></p>
+          <p class="text-white text-center"><%= new Date().toLocaleDateString('vi-VN', { 
+            weekday: 'long', 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric' 
+          }) %></p>
+          <div class="mb-4 text-center text-9xl">
+             <% if (data.weather[0].main === 'Clear') { %>
+              ☀️
+            <% } else if (data.weather[0].main === 'Clouds') { %>
+              ☁️
+            <% } else if (data.weather[0].main === 'Rain') { %>
+              🌧️
+            <% } else if (data.weather[0].main === 'Snow') { %>
+              ❄️
+            <% } else { %>
+              🌤️
+            <% } %>
+            <span class="text-8xl text-white font-bold"><%= data.main.temp %>°C</span>
+          </div>
+          <p class="text-center text-4xl font-medium text-white">Trạng thái: <%= data.weather[0].description %></p>
+          <p class="text-center text-2xl font-medium text-white">Cảm thấy như: <%= Math.round(data.main.feels_like) %>°C</p>
+          <div class="flex justify-center h-[20%] mt-12 gap-12 flex-wrap">
+            <div class="bg-blue-300/50 text-white font-medium w-60 text-center pt-6 rounded-4xl">
+              <p class="text-2xl">Tốc độ gió</p>
+              <p class="text-5xl"><%= data.wind.speed %> m/s</p>
+            </div>
+            <div class="bg-blue-300/50 text-white font-medium w-60 text-center pt-6 rounded-4xl">
+              <p class="text-2xl">Độ ẩm</p>
+              <p class="text-5xl"><%= data.main.humidity %> %</p>
+            </div>
+            <div class="bg-blue-300/50 text-white font-medium w-60 text-center pt-6 rounded-4xl">
+              <p class="text-2xl">Tầm nhìn</p>
+              <p class="text-5xl"><%= data.visibility %> m</p>
+            </div>
+            <div class="bg-blue-300/50 text-white font-medium w-60 text-center pt-6 rounded-4xl">
+              <p class="text-2xl">Áp suất</p>
+              <p class="text-5xl"><%= data.main.pressure  %> hPa</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+  </body>
+</html>
