@@ -1,7 +1,8 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import router from './router';
+import positionRouter from './routers/position';
+import searchRouter from './routers/search';
 import 'dotenv/config';
 
 const app = express();
@@ -18,7 +19,8 @@ app.get('/', (req, res) => {
   res.render('position');
 });
 
-app.use('/home', router);
+app.use('/home', positionRouter);
+app.use('/search', searchRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`http://localhost:${process.env.PORT}`);
