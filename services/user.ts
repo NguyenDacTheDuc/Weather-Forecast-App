@@ -10,7 +10,7 @@ export const register = async (username: string, password: string) => {
 };
 
 export const login = async (username: string, password: string) => {
-  const [rows] = await pool.execute<RowDataPacket[]>('select id from user where username = ?', [username]);
+  const [rows] = await pool.execute<RowDataPacket[]>('select * from user where username = ?', [username]);
   if (!rows[0]) throw new Error('Tài khoản này không tồn tại');
   const match = await bcrypt.compare(password, rows[0].password);
   if (!match) throw new Error('Sai mật khẩu');
@@ -18,7 +18,7 @@ export const login = async (username: string, password: string) => {
 };
 
 export const changePassword = async (id: number, password: string, newPassword: string) => {
-  const [rows] = await pool.execute<RowDataPacket[]>('select id  from user where id = ?', [id]);
+  const [rows] = await pool.execute<RowDataPacket[]>('select id, password from user where id = ?', [id]);
   if (rows[0]) {
     const match = await bcrypt.compare(password, rows[0].password);
     if (!match) throw new Error('Sai mật khẩu cũ');

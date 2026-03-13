@@ -1,18 +1,22 @@
 import { Router } from 'express';
-import { register } from '../services/user';
+import { login } from '../services/user';
 
 const router = Router();
 
 router.get('/', async (req, res) => {
-  res.render('register');
+  req.session.destroy(() => {
+    res.render('position');
+  });
 });
 
 router.post('/', async (req, res) => {
   try {
-    await register(req.body.username, req.body.password);
+    const user = await login(req.body.username, req.body.password);
+    (req.session as any).user = { id: user.id, username: user.username };
     res.status(201).json({
       success: true,
       url: '/',
+      user: { id: user.id, username: user.username },
     });
   } catch (error: any) {
     res.status(400).json({
